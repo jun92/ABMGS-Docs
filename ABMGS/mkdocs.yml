@@ -3,5 +3,6 @@ nav:
   - Home: index.md
   - About: about.md
   - QuickStart: quickstart.md
+  - Using Playroom: playroom.md
 theme:
   name: readthedocs
