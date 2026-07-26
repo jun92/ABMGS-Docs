@@ -42,5 +42,5 @@ jobs:
           file: ./ABMGS/Dockerfile
           push: true
           # tags: ${{ steps.meta.outputs.tags }}
-          tags: ${{ env.IMAGE_NAME }}:latest
+          tags: ${{ steps.prep.outputs.image }}:latest
           labels: ${{ steps.meta.outputs.labels }}
