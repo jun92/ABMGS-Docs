@@ -24,23 +24,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. 이미지 태그 및 소문자 변환 자동 처리 (추가된 부분)
+      # 2. 이미지 이름 소문자 변환 및 latest 태그 자동 생성
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
-          tags: |
-            type=raw,value=latest
-            type=sha,prefix=
+          tags: type=raw,value=latest
 
-      # 3. Docker 이미지 빌드 및 푸시
+      # 3. Docker 이미지 빌드 및 GHCR 푸시
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: ./ABMGS
           file: ./ABMGS/Dockerfile
           push: true
-          # tags: ${{ steps.meta.outputs.tags }}
-          tags: ${{ steps.prep.outputs.image }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
