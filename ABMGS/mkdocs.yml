@@ -2,5 +2,6 @@ site_name: Syncnet Platform
 nav:
   - Home: index.md
   - About: about.md
+  - QuickStart: quickstart.md
 theme:
   name: readthedocs
