@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write  # GHCR에 이미지를 푸시하기 위한 권한 설정
+      packages: write
 
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
 
-      # 1. GHCR (ghcr.io) 로그인
+      # 1. GHCR 로그인
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -24,18 +24,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 2. 이미지 태그 생성을 소문자로 변환 (GitHub ID/리포지토리명에 대문자가 섞여있을 때 오류 방지)
-      - name: Lowercase Repository Name
-        id: repo_name
-        run: |
-          echo "IMAGE_NAME=ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+      # 2. 이미지 태그 및 소문자 변환 자동 처리 (추가된 부분)
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest
+            type=sha,prefix=
 
-      # 3. Docker 이미지 빌드 및 GHCR 푸시
+      # 3. Docker 이미지 빌드 및 푸시
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: |
-            ${{ env.IMAGE_NAME }}:${{ github.sha }}
-# ${{ env.IMAGE_NAME }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
