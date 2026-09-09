@@ -4,7 +4,7 @@ FROM python:3.11-slim AS builder
 WORKDIR /app
 
 # 필요 라이브러리 설치 (Material 테마 사용 시)
-RUN pip install --no-cache-dir mkdocs mkdocs-material
+RUN pip install --no-cache-dir mkdocs mkdocs-material mkdocs-mermaid2-plugin
 
 COPY . .
 
