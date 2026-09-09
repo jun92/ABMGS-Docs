@@ -1,9 +1,15 @@
 site_name: Syncnet Platform
 nav:
   - Home: index.md
-  - QuickIntro: quick_intro.md
-  - About: about.md
-  - QuickStart: quickstart.md
-  - Using Playroom: playroom.md
+  # - Home: index.md
+  # - QuickIntro: quick_intro.md
+  # - About: about.md
+  # - QuickStart: quickstart.md
+  # - Using Playroom: playroom.md
 theme:
   name: readthedocs
+plugins:
+  - search
+  - mermaid2
+    # arguments:
+      # useMaxWidth: true
