@@ -1,0 +1,7 @@
+{
+  "name": "syncnet-docs",
+  "compatibility_date": "2026-11-17",
+  "assets": {
+    "directory": "./ABMGS/site"
+  }
+}
